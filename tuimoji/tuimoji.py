@@ -1,6 +1,7 @@
 #!/bin/env python3
 
 import urwid
+import os
 import json
 import argparse
 from shutil import which
@@ -32,7 +33,8 @@ class CustomSelectableIcon(urwid.SelectableIcon):
         return key
 
     def paste(self, contents):
-        print(contents, end='')
+        with os.fdopen(3, 'wb') as out:
+            out.write(contents)
 
 def all_emojis(skin_tone):
     emoji_json = resource_string(__name__, 'emojis.json')
