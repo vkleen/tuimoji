@@ -32,9 +32,7 @@ class CustomSelectableIcon(urwid.SelectableIcon):
         return key
 
     def paste(self, contents):
-        p = Popen(['xclip', '-selection', self.selection], stdin=PIPE)
-        p.communicate(contents)
-
+        print(contents, end='')
 
 def all_emojis(skin_tone):
     emoji_json = resource_string(__name__, 'emojis.json')
@@ -152,19 +150,7 @@ def handle_keys(key):
     if key == 'esc':
         raise urwid.ExitMainLoop()
 
-
-def test_exec(executable):
-    if not which(executable):
-        raise FileNotFoundError('Could not find ' + executable)
-
-
 def main():
-    try:
-        test_exec('xclip')
-    except FileNotFoundError:
-        print('ERROR: Could not find xclip. Do you have it intalled?')
-        return
-
     description = 'TuiMoji: Terminal based emoji chooser.'
     tone_help = 'Skin tone to use. ' \
         '"0": None (default) ' \
